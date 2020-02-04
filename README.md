@@ -6,7 +6,7 @@ Run the following lines in a command shell to install the proper dependencies:
 - `pip install NumPy`
 
 #### Running the Program
-- Execute `python stego.py` in a command shell to open the Steganography GUI.
+- Execute `python stego.py` in a command shell to open the Steganography GUI. ![Starting state.](https://raw.githubusercontent.com/jtjunior09/stego/master/ScreenCaps-Doc/start.png )
 
 #### Hiding a Message:
 - Click `Select an Image`. A file select dialog will open, pointing at the directory the program is in.
@@ -18,7 +18,7 @@ window. ![New image is selected and ready to have a message encoded.](https://gi
 pixel count.
 - Check `Mask Steps` if you'd like the program to not place the step settings into the image.
 - With a message entered and the wanted Step settings entered/selected, click `Hide Message` to hide the message in the selected
-picture.
+picture. ![New image is created and shown on the right canvas. Message is hidden inside.](https://raw.githubusercontent.com/jtjunior09/stego/master/ScreenCaps-Doc/message-hidden.png )
 - Click `Save New Image` to save the newly created image to the local filesystem.
 
 #### Recovering a Message:
@@ -29,4 +29,4 @@ window.
 - Click `Recover Message` to retrieve the hidden message within the image. If the 'Mask Steps' option was selected during message hiding, 
 you will need to know and enter the correct Steps Count to retrieve the hidden message. If the 'Mask Steps' option was NOT selected during
 message hiding, the program will read the first 4 pixels to determine the Step Count.
-- The output image will display black pixels for any pixels it attempted to retrieve bits of the message from.
+- The output image will display black pixels for any pixels it attempted to retrieve bits of the message from. ![Message is recovered. Pixels that were used are changed to black.](https://raw.githubusercontent.com/jtjunior09/stego/master/ScreenCaps-Doc/message-recovered.png )
