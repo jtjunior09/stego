@@ -30,6 +30,3 @@ window.
 you will need to know and enter the correct Steps Count to retrieve the hidden message. If the 'Mask Steps' option was NOT selected during
 message hiding, the program will read the first 4 pixels to determine the Step Count.
 - The output image will display black pixels for any pixels it attempted to retrieve bits of the message from.
-
-
-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
