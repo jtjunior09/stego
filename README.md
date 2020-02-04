@@ -12,7 +12,7 @@ Run the following lines in a command shell to install the proper dependencies:
 - Click `Select an Image`. A file select dialog will open, pointing at the directory the program is in.
 - Select an image. By default, `*.png` files are shown. You can select any image file supported by PIL by 
 changing the filetype the selector displays. Upon selecting an image, it will be displayed within the Steganography
-window. ![New image is selected and ready to have a message encoded.](https://github.com/jtjunior09/stego/tree/master/ScreenCaps-Doc/fresh-image-selected.png )
+window. ![New image is selected and ready to have a message encoded.](https://github.com/jtjunior09/stego/blob/master/ScreenCaps-Doc/fresh-image-selected.png?raw=true )
 - Enter a message you'd like to hide inside of the image.
 - Specify Step Count or leave blank. If left blank, the program will find the best Step Count to fit the message into the
 pixel count.
