@@ -95,11 +95,12 @@ class Stego:
 	# pickFileBtn callback
 	def openFileHandle(self):
 		print("Open File Handler Hit")
-		filePath = ""
-		while filePath == "":
-			filePath = filedialog.askopenfilename(initialdir=os.getcwd(), title='Select a File', filetypes=(('png files', '*.png'),('all files', '*.*')))
-			print("File Path Selected: {}".format(filePath))
+		
+		filePath = filedialog.askopenfilename(initialdir=os.getcwd(), title='Select a File', filetypes=(('png files', '*.png'),('all files', '*.*')))
+		print("File Path Selected: {}".format(filePath))
 
+		if filePath == "":
+			return
 		self.canvasOrig.filePath = filePath
 		self.canvasOrig.img = PIL.Image.open(filePath)
 		w, h = self.canvasOrig.img.size
@@ -107,13 +108,6 @@ class Stego:
 		self.canvasOrig.tkImg = PIL.ImageTk.PhotoImage(self.canvasOrig.img)
 		self.canvasOrig.imgSprite = self.canvasOrig.create_image(w/2, h/2, anchor=CENTER, image=self.canvasOrig.tkImg)
 		self.canvasOrig.update()
-
-		self.canvasNew.filePath = filePath
-		self.canvasNew.img = PIL.Image.open(filePath)
-		self.canvasNew.config(width=w, height=h)
-		self.canvasNew.tkImg = PIL.ImageTk.PhotoImage(self.canvasNew.img)
-		self.canvasNew.imgSprite = self.canvasNew.create_image(w/2, h/2, anchor=CENTER, image=self.canvasNew.tkImg)
-		self.canvasNew.update()
 
 		self.enableButtons()
 
@@ -124,11 +118,20 @@ class Stego:
 		bytes.extend(self.textInput.get('1.0', END).encode('utf-8'))
 		bytes.append(23) # End of Transmission Block utf-8 character
 		bits = np.unpackbits(bytes)
-		print('Bit Array: {}'.format(bits))
 		return bits
 
 	def hideMessageHandle(self):
 		print("Hide Message Handler Hit")
+		
+		self.canvasNew.filePath = self.canvasOrig.filePath
+		self.canvasNew.img = PIL.Image.open(self.canvasNew.filePath)
+		w, h = self.canvasNew.img.size
+		self.canvasNew.config(width=w, height=h)
+		self.canvasNew.tkImg = PIL.ImageTk.PhotoImage(self.canvasNew.img)
+		self.canvasNew.imgSprite = self.canvasNew.create_image(w/2, h/2, anchor=CENTER, image=self.canvasNew.tkImg)
+		self.canvasNew.update()
+		
+		
 		bits = self.convertStringToBitsArray()
 		size = self.canvasNew.img.size
 		width, height = size
@@ -200,10 +203,16 @@ class Stego:
 
 	def recoverMessageHandle(self):
 		print("Recover Message Handler Hit")
-		size = self.canvasOrig.img.size
-		width, height = size
+		
+		self.canvasNew.filePath = self.canvasOrig.filePath
+		self.canvasNew.img = PIL.Image.open(self.canvasNew.filePath)
+		w, h = self.canvasNew.img.size
+		self.canvasNew.config(width=w, height=h)
+		self.canvasNew.tkImg = PIL.ImageTk.PhotoImage(self.canvasNew.img)
+		self.canvasNew.imgSprite = self.canvasNew.create_image(w/2, h/2, anchor=CENTER, image=self.canvasNew.tkImg)
+		self.canvasNew.update()
 
-		newImg = PIL.Image.new('RGB', (width, height), 'white')
+		newImg = PIL.Image.new('RGB', (w, h), 'white')
 		pixels = newImg.load()
 
 		allBitsArr = []
@@ -227,13 +236,13 @@ class Stego:
 			step = int(settingsBits, 2)
 			self.stepsVar.set(step)
 
-		for i in range(width):
-			for j in range(height):
+		for i in range(w):
+			for j in range(h):
 				# Ignore first 4 pixels (Message starts after the first 4 pixels)
 				if i == 0 and j < 4:
 					continue
 				pixel = self.canvasNew.img.getpixel((i, j))
-				if (i * width + j) % step == 0: # Get bits of msg and change this pixel to black
+				if (i * w + j) % step == 0: # Get bits of msg and change this pixel to black
 					rBit = (pixel[0] & 1)
 					gBit = (pixel[1] & 1)
 					bBit = (pixel[2] & 1)
@@ -256,7 +265,7 @@ class Stego:
 
 		self.canvasNew.img = newImg
 		self.canvasNew.tkImg = PIL.ImageTk.PhotoImage(self.canvasNew.img)
-		self.canvasNew.imgSprite = self.canvasNew.create_image(width/2, height/2, anchor=CENTER, image=self.canvasNew.tkImg)
+		self.canvasNew.imgSprite = self.canvasNew.create_image(w/2, h/2, anchor=CENTER, image=self.canvasNew.tkImg)
 		self.canvasNew.update()
 
 if __name__ == '__main__':
